@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Webview RN</title>
+    <style>
+        body {
+            background-color: #222222;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        footer {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            padding: 5px 10px;
+            border: 1px solid white;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <form id="paymentForm">
+                <label for="cardNumber">Numero Carta:</label><br>
+                <input type="text" id="cardNumber" name="cardNumber" placeholder="Numero Carta"><br>
+                <input type="submit" id="cancelButton" value="Annulla">
+                <input type="submit" id="continueButton" value="Continua" disabled>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <a href="#" id="successLink">Naviga a pagina di successo</a>
+        <a href="#" id="errorLink">Naviga a pagina di errore</a>
+    </footer>
+
+    <script>
+        const cardNumberInput = document.getElementById('cardNumber');
+        const continueButton = document.getElementById('continueButton');
+        const successLink = document.getElementById('successLink');
+        const errorLink = document.getElementById('errorLink');
+
+        cardNumberInput.addEventListener('input', function() {
+            if (cardNumberInput.value.trim() !== '') {
+                continueButton.disabled = false;
+            } else {
+                continueButton.disabled = true;
+            }
+        });
+
+        cancelButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            window.ReactNativeWebView.postMessage('cancel');
+        });
+
+        continueButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            window.ReactNativeWebView.postMessage('continue');
+        });
+
+        successLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = "https://success.com/";
+        });
+
+        errorLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = "https://error.com/";
+        });
+    </script>
+</body>
+</html>
